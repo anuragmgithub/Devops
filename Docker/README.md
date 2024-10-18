@@ -133,6 +133,23 @@ Docker provides networking capabilities for containers to communicate with each 
 
 ## Docker Build context  
 - The build context is essential for building Docker images because it determines which files are available to the Docker daemon.
-- Proper management of the build context, including the use of a `.dockerignore file`, can greatly enhance performance and ensure that only necessary files are included in the image build process.
+- Proper management of the build context, including the use of a `.dockerignore file`, can greatly enhance performance and ensure that only necessary files are included in the image build process.  
+**You can pass any of the following inputs as the context for a build:**
+- The relative or absolute path to a local directory
+- A remote URL of a Git repository, tarball, or plain-text file
+- A plain-text file or tarball piped to the docker build command through standard input
+
+
+When you run the docker build command, Docker takes the current directory (or the specified context) and sends all its contents to the Docker daemon. This directory structure and its files form the build context.
+
+By controlling what files are included in the build context, you can optimize both build times and final image sizes. Using a .dockerignore file is essential for effective Docker image management, especially as projects grow in complexity.
+
+**Best Practices**
+- Use .dockerignore: Always create a .dockerignore file to exclude unnecessary files from the build context. This ensures that only relevant files are sent to the Docker daemon, speeding up the build process.
+- Minimal Build Context: Keep your build context minimal. Only include files needed for building the image. If your application is complex, consider breaking it into smaller components with separate Dockerfiles.
+- Review COPY Commands: Be explicit in your COPY commands to ensure you're only including the files necessary for the application to run
+
+
+
 
 
