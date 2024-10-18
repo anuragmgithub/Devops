@@ -115,12 +115,7 @@ Dependency Management:  With Dockerfile: You needed to manage the startup order 
 With Docker Compose: You can use depends_on to ensure that containers start in the correct order (e.g., the backend waits for the database to be ready).  
 
 
-
-
-
----
-
-## Conclusion
+### Conclusion
 Docker Compose provides a powerful way to manage multi-container applications, simplifying the orchestration, networking, and scaling of services compared to using Dockerfiles alone. It is especially useful in complex environments with multiple interacting services.
 
 ## Docker Volumes:
