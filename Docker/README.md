@@ -44,6 +44,58 @@ The **Docker Registry** is a centralized repository for storing and sharing Dock
 #### 5. Simplified Data Persistence
 - **Docker Compose**: Easily defines shared volumes for data persistence across containers, simplifying what would otherwise require manual setup with `docker run` commands.
 
+#### Example  
+- **Problem Scenario: Using Only Dockerfile**   
+You are working on a web application that requires three services:
+
+- A frontend (React) container.
+- A backend (Node.js/Express) container.
+- A database (PostgreSQL) container.  
+
+**When using only Dockerfiles,  would have to manually:**
+
+- Create a Dockerfile for each service (frontend, backend, and database).
+- Set up each container individually with docker run commands.
+- Manually manage the networking between these containers (i.e., allowing frontend to talk to backend, and backend to talk to the database).
+- Set up volumes for persisting database data.
+- Handle dependencies, such as ensuring the database starts before the backend and that the backend starts before the frontend.
+
+**Solution: Using Docker Compose**
+Docker Compose solves all these problems by allowing you to define all your services in a single docker-compose.yml file. You can define the entire multi-container environment, including networking, volumes, and dependencies.
+
+```
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgres://user:password@db:5432/mydb
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+
+volumes:
+  db-data:
+```
+
 ---
 
 ## Conclusion
