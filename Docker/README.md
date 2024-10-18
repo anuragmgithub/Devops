@@ -96,6 +96,28 @@ volumes:
   db-data:
 ```
 
+**How Docker Compose Solves the Problems:**
+
+Simplified Startup: 
+With Dockerfile: You needed to manually run each container and link them.  
+With Docker Compose: You can start all services with a single command: docker-compose up. Compose takes care of the container lifecycle, bringing up the services in the correct order.  
+
+Networking:  
+With Dockerfile: Networking setup is manual, requiring network creation and IP configuration.  
+With Docker Compose: Compose automatically creates a shared network where services can communicate by their service name (e.g., db for the database). No manual IP management needed
+
+Data Persistence:  
+With Dockerfile: You needed to manage data volumes for each container manually.   
+With Docker Compose: You can define a shared volume (db-data) for PostgreSQL, and it’s automatically managed and mounted by Docker Compose.  
+
+Dependency Management:  With Dockerfile: You needed to manage the startup order of containers manually, or the backend might fail to connect to the database if it starts too early.  
+
+With Docker Compose: You can use depends_on to ensure that containers start in the correct order (e.g., the backend waits for the database to be ready).  
+
+
+
+
+
 ---
 
 ## Conclusion
