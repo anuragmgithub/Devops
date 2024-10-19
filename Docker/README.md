@@ -1,4 +1,4 @@
-# DevOps
+# DOCKER CONCEPTS
 
 ## Docker Engine
 Docker Engine is composed of two main components:
@@ -143,6 +143,15 @@ By controlling what files are included in the build context, you can optimize bo
 - Use .dockerignore: Always create a .dockerignore file to exclude unnecessary files from the build context. This ensures that only relevant files are sent to the Docker daemon, speeding up the build process.
 - Minimal Build Context: Keep your build context minimal. Only include files needed for building the image. If your application is complex, consider breaking it into smaller components with separate Dockerfiles.
 - Review COPY Commands: Be explicit in your COPY commands to ensure you're only including the files necessary for the application to run
+
+---
+## Why Multi-Stage Builds?  
+When you build an application, you often need additional tools and dependencies (like compilers, libraries, and debuggers) to compile the source code. However, once the application is built, these tools are no longer needed to run it. By using multi-stage builds, you can separate the build process from the runtime environment, resulting in smaller and more efficient Docker images.
+
+---
+
+## Build variables
+
 
 
 
