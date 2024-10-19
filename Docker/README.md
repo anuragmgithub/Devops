@@ -151,6 +151,46 @@ When you build an application, you often need additional tools and dependencies 
 ---
 
 ## Build variables
+Docker build variables allow you to make Dockerfiles more dynamic by passing values at build time.  
+These values can be passed using build  
+- arguments (ARG),
+- environment variables (ENV),
+- and also via runtime environment variables.  
+
+**Using ARG to Pass Build-Time Variables**  
+
+You can find the full Dockerfile example [here](Devops/Docker/CustomArgvarDockerfile).
+
+**Combining ARG and ENV**  
+Sometimes you want to pass build-time variables (ARG) and make them available as environment variables (ENV) within the container runtime.  
+ARG values are only available <u>during the build process</u>, but you can forward them to the <u>final image using ENV</u>.  
+- ARG is for the build process (compiling, installing specific versions, etc.).
+- ENV is for configuring the application when it’s running, allowing you to customize the behavior of your containerized application at runtime without rebuilding the image.  
+
+**Dynamic COPY Using Build-Time Variables**  
+Copy environment-specific configuration files during the build.
+```
+# Base image
+FROM node:14
+
+# Define build-time argument for environment
+ARG ENVIRONMENT=production
+
+# Set environment variable
+ENV ENVIRONMENT=${ENVIRONMENT}
+
+# Copy environment-specific config
+COPY config.${ENVIRONMENT}.json /app/config.json
+
+# Install app dependencies
+COPY package.json /app/
+RUN npm install
+
+# Set the default command
+CMD ["npm", "start"]
+```
+*docker build -t my-app --build-arg ENVIRONMENT=development .*   
+In this case: The COPY command dynamically copies either config.development.json or config.production.json based on the build-time argument.
 
 
 
